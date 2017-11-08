@@ -1,0 +1,26 @@
+<link rel="import"  href="https://polygit.org/components/polymer/polymer-element.html">
+
+<dom-module id="dom-element">
+
+  <template>
+    <h2><slot name="h"></slot></h2>
+    <p>
+        I'm a DOM element. This is my shadow DOM!
+        <br>
+        <em>
+            <slot></slot>
+        </em>
+    </p>
+    <!--
+    TODO: Try adding some other html elements inside the <template></template> block. For example, add <h1>A heading!</h1> or <a href=”stuff.html”>A link!</a>
+    --> 
+  </template>
+
+  <script>
+    class DomElement extends Polymer.Element {
+      static get is() { return "dom-element"; }
+    }
+    customElements.define(DomElement.is, DomElement);
+  </script>
+
+</dom-module>

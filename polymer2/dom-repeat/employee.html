@@ -1,0 +1,25 @@
+<!-- import polymer-element -->
+<link rel="import"  href="https://polygit.org/components/polymer/polymer-element.html">
+
+<dom-module id="one-employee">
+  <template>
+        <div>First name: <span>{{name.first}}</span></div>
+        <div>Last name: <span>{{name.last}}</span></div>
+  </template>
+  <script>
+    class Employee extends Polymer.Element {
+      static get is() { return "one-employee"; }
+      
+      // set this element's employees property
+      constructor() {
+        super();
+        this.name = 
+          {
+              first: 'Bob', 
+              last: 'Li'}
+            };
+    }
+  customElements.define(Employee.is, Employee);
+  </script>
+
+</dom-module>

@@ -1,0 +1,37 @@
+<!-- import polymer-element -->
+<link rel="import" href="https://polygit.org/components/polymer/polymer-element.html">
+
+<dom-module id="one-employee">
+  <template>
+    <div>
+      <div>First name:
+        <span>
+          <slot name="first"></slot>
+        </span>
+      </div>
+      <div>Last name:
+        <span>
+          <slot id="lastname" name="last"></slot>
+        </span>
+      </div>
+      <button on-click="handleClick">Click Me</button>
+    </div>
+  </template>
+  <script>
+    class Employee extends Polymer.Element {
+      static get is() { return "one-employee"; }
+
+      // set this element's employees property
+      constructor() {
+        super();
+      }
+      handleClick(e) {
+        console.log("clicked person is " + 
+        e.target.parentElement.querySelectorAll("slot[name=last]")[0].assignedNodes()[0].innerHTML
+        );
+      }
+    }
+    customElements.define(Employee.is, Employee);
+  </script>
+
+</dom-module>
