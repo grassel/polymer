@@ -1,0 +1,35 @@
+<!-- import polymer-element -->
+<link rel="import" href="https://polygit.org/components/polymer/polymer-element.html">
+
+<dom-module id="lazy-img">
+  <template>
+    <img src="[[src]]" alt="an image">
+    </img>
+  </template>
+  <script>
+    class LazyImage extends Polymer.Element {
+      static get is() { return "lazy-img"; }
+
+      // set this element's employees property
+      constructor() {
+        super();
+      }
+
+      static get properties() {
+        return {
+          src: {
+            type: String,
+            value: "",
+          }
+        };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.shadowRoot.querySelector("img").src = this.src;
+      }
+    }
+    customElements.define(LazyImage.is, LazyImage);
+  </script>
+
+</dom-module>
