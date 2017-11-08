@@ -13,11 +13,39 @@
       // set this element's employees property
       constructor() {
         super();
+
+        this.io = new IntersectionObserver(
+          function (scope) {
+            let scope1 = scope;
+            return function (entries, observe) {
+              if (entries[0].intersectionRatio <= 0) {
+                return;
+              }
+              scope1.handleIntersect(entries, observe)
+            };
+          }(this),
+          {
+            // The root to use for intersection.
+            // If not provided, use the top-level document’s viewport.
+            root: null,
+            // Same as margin, can be 1, 2, 3 or 4 components, possibly negative lengths.
+            // If an explicit root element is specified, components may be percentages of the
+            // root element size.  If no explicit root element is specified, using a percentage
+            // is an error.
+            rootMargin: "0px",
+            // Threshold(s) at which to trigger callback, specified as a ratio, or list of
+            // ratios, of (visible area / total area) of the observed element (hence all
+            // entries must be in the range [0, 1]).  Callback will be invoked when the visible
+            // ratio of the observed element crosses a threshold in the list.
+            threshold: [0],
+          });
+
+        this.img = null;
       }
 
       static get properties() {
         return {
-          src: {
+          lazy_src: {
             type: String,
             value: "",
           }
@@ -26,9 +54,21 @@
 
       connectedCallback() {
         super.connectedCallback();
-        this.shadowRoot.querySelector("img").src = this.src;
+        this.img = this.shadowRoot.querySelector("img");
+        this.img.onload = (e) => { console.log("image loaded!"); };
+        this.io.observe(this.img);
       }
+
+      handleIntersect(entries, observer) {
+        console.log("intersect event");
+        this.shadowRoot.querySelector('img').src = this.lazy_src;
+      }
+
+      // TODO get rid of observer
+      // io.unobserve(element);
+      // io.disconnect();
     }
+
     customElements.define(LazyImage.is, LazyImage);
   </script>
 
