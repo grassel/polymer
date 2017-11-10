@@ -3,6 +3,11 @@
 
 <dom-module id="lazy-img">
   <template>
+    <style>
+      img {
+        background-color: grey;
+      }
+    </style>
     <img src="[[src]]" alt="an image">
     </img>
   </template>
@@ -48,6 +53,20 @@
           lazy_src: {
             type: String,
             value: "",
+          },
+          width: {
+            type: Number,
+            value: 1
+          },
+          height: {
+            type: Number,
+            value: 1
+          },
+          "object-fit": {
+            type: String,
+          },
+          "object-position": {
+            type: String,
           }
         };
       }
@@ -55,6 +74,10 @@
       connectedCallback() {
         super.connectedCallback();
         this.img = this.shadowRoot.querySelector("img");
+        this.img.style["width"] = this.getAttribute("width");
+        this.img.style["height"] = this.getAttribute("height");
+        this.img.style["object-fit"] = this.getAttribute("object-fit");
+        this.img.style["object-position"] = this.getAttribute("object-position");
         this.img.onload = (e) => { console.log("image loaded!"); };
         this.io.observe(this.img);
       }
